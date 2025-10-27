@@ -65,26 +65,31 @@ class TaskRemoteDataSource {
     try {
       // Convert to JSON for debugging
       final jsonData = task.toJson();
-      
+
       // Make the POST request
       final response = await _dioClient.post<dynamic>(
         ApiConstants.getTasksEndpoint(),
         data: jsonData,
       );
-      
+
       // Handle response data
       if (response.data == null) {
-        throw NetworkException('Server returned null response', response.statusCode);
+        throw NetworkException(
+          'Server returned null response',
+          response.statusCode,
+        );
       }
-      
+
       // Parse response
       if (response.data is Map<String, dynamic>) {
         return TaskModel.fromJson(response.data as Map<String, dynamic>);
       } else {
         // Try to parse as string
-        throw NetworkException('Unexpected response format: ${response.data.runtimeType}', response.statusCode);
+        throw NetworkException(
+          'Unexpected response format: ${response.data.runtimeType}',
+          response.statusCode,
+        );
       }
-      
     } on NetworkException {
       rethrow;
     } catch (e) {
