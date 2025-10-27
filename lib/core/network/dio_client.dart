@@ -64,7 +64,7 @@ class DioClient {
       // 1. Logging Interceptor - Logs all requests and responses
       //    Useful for debugging and monitoring network activity
       _LoggingInterceptor(),
-      
+
       // 2. Error Handling Interceptor - Converts Dio errors to app exceptions
       //    Provides user-friendly error messages
       _ErrorInterceptor(),
@@ -170,7 +170,10 @@ class _LoggingInterceptor extends Interceptor {
   }
 
   @override
-  void onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) {
+  void onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     print('┌─────────────────────────────────────────────────────────────');
     print('│ 📥 RESPONSE');
     print('│ ${response.requestOptions.method} ${response.statusCode}');
@@ -186,7 +189,9 @@ class _LoggingInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     print('┌─────────────────────────────────────────────────────────────');
     print('│ ❌ ERROR');
-    print('│ ${err.requestOptions.method} ${err.response?.statusCode ?? 'N/A'}');
+    print(
+      '│ ${err.requestOptions.method} ${err.response?.statusCode ?? 'N/A'}',
+    );
     print('│ URI: ${err.requestOptions.uri}');
     print('│ Message: ${err.message}');
     if (err.response?.data != null) {
@@ -206,7 +211,7 @@ class _ErrorInterceptor extends Interceptor {
     // - Logging to analytics
     // - Showing error notifications
     // - Transforming error data
-    
+
     handler.next(err);
   }
 }

@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
 import '../../../../core/constants/api_constants.dart';
+import '../../../../core/network/dio_client.dart';
 import '../../../../core/network/network_exceptions.dart';
 import '../models/task_model.dart';
 
@@ -9,71 +9,102 @@ import '../models/task_model.dart';
 /// This abstraction allows the repository to remain agnostic about
 /// the actual data source implementation. It can easily be mocked
 /// for testing or swapped with a different implementation.
+///
+/// **Uses DioClient for:**
+/// - Centralized HTTP client with interceptors
+/// - Automatic error handling
+/// - Logging and debugging
+/// - Consistent configuration
 class TaskRemoteDataSource {
-  final Dio _dio;
+  final DioClient _dioClient;
 
-  TaskRemoteDataSource(this._dio);
+  TaskRemoteDataSource() : _dioClient = DioClient();
 
   /// Fetch all tasks from the server
+  ///
+  /// Performs a GET request to retrieve all tasks.
+  /// Returns a list of TaskModel instances.
   Future<List<TaskModel>> getTasks() async {
     try {
-      final response = await _dio.get<List<dynamic>>(
+      final response = await _dioClient.get<List<dynamic>>(
         ApiConstants.getTasksEndpoint(),
       );
       final tasksJson = response.data ?? [];
-      return tasksJson.map((json) => TaskModel.fromJson(json as Map<String, dynamic>)).toList();
-    } on DioException catch (e) {
-      throw NetworkException.fromDioError(e);
+      return tasksJson
+          .map((json) => TaskModel.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on NetworkException {
+      rethrow;
+    } catch (e) {
+      throw NetworkException('Failed to fetch tasks: ${e.toString()}', null);
     }
   }
 
   /// Fetch a specific task by ID
+  ///
+  /// Performs a GET request to retrieve a single task by its ID.
+  /// Returns a TaskModel instance.
   Future<TaskModel> getTaskById(String id) async {
     try {
-      final response = await _dio.get<Map<String, dynamic>>(
+      final response = await _dioClient.get<Map<String, dynamic>>(
         ApiConstants.getTaskByIdEndpoint(id),
       );
       return TaskModel.fromJson(response.data as Map<String, dynamic>);
-    } on DioException catch (e) {
-      throw NetworkException.fromDioError(e);
+    } on NetworkException {
+      rethrow;
+    } catch (e) {
+      throw NetworkException('Failed to fetch task: ${e.toString()}', null);
     }
   }
 
   /// Create a new task on the server
+  ///
+  /// Performs a POST request to create a new task.
+  /// Returns the created TaskModel with server-generated ID.
   Future<TaskModel> createTask(TaskModel task) async {
     try {
-      final response = await _dio.post<Map<String, dynamic>>(
+      final response = await _dioClient.post<Map<String, dynamic>>(
         ApiConstants.getTasksEndpoint(),
         data: task.toJson(),
       );
       return TaskModel.fromJson(response.data as Map<String, dynamic>);
-    } on DioException catch (e) {
-      throw NetworkException.fromDioError(e);
+    } on NetworkException {
+      rethrow;
+    } catch (e) {
+      throw NetworkException('Failed to create task: ${e.toString()}', null);
     }
   }
 
   /// Update an existing task
+  ///
+  /// Performs a PUT request to update an existing task.
+  /// Returns the updated TaskModel.
   Future<TaskModel> updateTask(TaskModel task) async {
     try {
-      final response = await _dio.put<Map<String, dynamic>>(
+      final response = await _dioClient.put<Map<String, dynamic>>(
         ApiConstants.getTaskByIdEndpoint(task.id),
         data: task.toJson(),
       );
       return TaskModel.fromJson(response.data as Map<String, dynamic>);
-    } on DioException catch (e) {
-      throw NetworkException.fromDioError(e);
+    } on NetworkException {
+      rethrow;
+    } catch (e) {
+      throw NetworkException('Failed to update task: ${e.toString()}', null);
     }
   }
 
   /// Delete a task
+  ///
+  /// Performs a DELETE request to remove a task from the server.
   Future<void> deleteTask(String id) async {
     try {
-      await _dio.delete<Map<String, dynamic>>(
+      await _dioClient.delete<Map<String, dynamic>>(
         ApiConstants.getTaskByIdEndpoint(id),
       );
-    } on DioException catch (e) {
-      throw NetworkException.fromDioError(e);
+    } on NetworkException {
+      rethrow;
+    } catch (e) {
+      throw NetworkException('Failed to delete task: ${e.toString()}', null);
     }
   }
 }
-

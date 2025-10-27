@@ -20,4 +20,3 @@ class GetTaskUseCase {
     return await _repository.getTaskById(id);
   }
 }
-

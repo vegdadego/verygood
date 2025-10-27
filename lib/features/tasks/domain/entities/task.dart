@@ -4,19 +4,23 @@
 /// It represents the core business object and is independent of how data
 /// is stored or displayed. This makes the domain layer portable and
 /// testable without infrastructure concerns.
+///
+/// **Core Properties:**
+/// - `id`: Unique identifier for the task
+/// - `title`: Task title
+/// - `description`: Task description
+/// - `completed`: Whether the task is completed
 class Task {
   final String id;
   final String title;
   final String description;
-  final bool isCompleted;
-  final DateTime createdAt;
+  final bool completed;
 
   const Task({
     required this.id,
     required this.title,
     required this.description,
-    required this.isCompleted,
-    required this.createdAt,
+    required this.completed,
   });
 
   /// Create a copy of this task with updated properties
@@ -24,15 +28,13 @@ class Task {
     String? id,
     String? title,
     String? description,
-    bool? isCompleted,
-    DateTime? createdAt,
+    bool? completed,
   }) {
     return Task(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      isCompleted: isCompleted ?? this.isCompleted,
-      createdAt: createdAt ?? this.createdAt,
+      completed: completed ?? this.completed,
     );
   }
 
@@ -44,10 +46,8 @@ class Task {
           id == other.id &&
           title == other.title &&
           description == other.description &&
-          isCompleted == other.isCompleted &&
-          createdAt == other.createdAt;
+          completed == other.completed;
 
   @override
-  int get hashCode => Object.hash(id, title, description, isCompleted, createdAt);
+  int get hashCode => Object.hash(id, title, description, completed);
 }
-

@@ -18,4 +18,3 @@ class DeleteTaskUseCase {
     return await _repository.deleteTask(id);
   }
 }
-

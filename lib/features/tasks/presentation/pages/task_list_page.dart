@@ -55,10 +55,10 @@ class TaskListPage extends StatelessWidget {
                         title: Text(task.title),
                         subtitle: Text(task.description),
                         trailing: Checkbox(
-                          value: task.isCompleted,
+                          value: task.completed,
                           onChanged: (value) {
                             final updatedTask = task.copyWith(
-                              isCompleted: value ?? false,
+                              completed: value ?? false,
                             );
                             context.read<TaskCubit>().updateTask(updatedTask);
                           },
@@ -73,9 +73,9 @@ class TaskListPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         context.read<TaskCubit>().createTask(
-                              title: 'New Task',
-                              description: 'Task description',
-                            );
+                          title: 'New Task',
+                          description: 'Task description',
+                        );
                       },
                       child: const Text('Add Task'),
                     ),
@@ -95,4 +95,3 @@ class TaskListPage extends StatelessWidget {
     );
   }
 }
-

@@ -17,4 +17,3 @@ class GetTasksUseCase {
     return await _repository.getTasks();
   }
 }
-

@@ -25,8 +25,7 @@ class CreateTaskUseCase {
       id: _generateId(),
       title: title,
       description: description,
-      isCompleted: false,
-      createdAt: DateTime.now(),
+      completed: false,
     );
 
     return await _repository.createTask(task);
@@ -37,4 +36,3 @@ class CreateTaskUseCase {
     return DateTime.now().millisecondsSinceEpoch.toString();
   }
 }
-

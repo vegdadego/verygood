@@ -41,11 +41,11 @@ class TaskCubit extends Cubit<TaskState> {
     required CreateTaskUseCase createTaskUseCase,
     required UpdateTaskUseCase updateTaskUseCase,
     required DeleteTaskUseCase deleteTaskUseCase,
-  })  : _getTasksUseCase = getTasksUseCase,
-        _createTaskUseCase = createTaskUseCase,
-        _updateTaskUseCase = updateTaskUseCase,
-        _deleteTaskUseCase = deleteTaskUseCase,
-        super(TaskInitial());
+  }) : _getTasksUseCase = getTasksUseCase,
+       _createTaskUseCase = createTaskUseCase,
+       _updateTaskUseCase = updateTaskUseCase,
+       _deleteTaskUseCase = deleteTaskUseCase,
+       super(TaskInitial());
 
   /// Fetch all tasks
   Future<void> loadTasks() async {
@@ -91,4 +91,3 @@ class TaskCubit extends Cubit<TaskState> {
     }
   }
 }
-

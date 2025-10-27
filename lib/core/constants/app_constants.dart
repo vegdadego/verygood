@@ -19,4 +19,3 @@ class AppConstants {
   static const String dateFormat = 'yyyy-MM-dd';
   static const String dateTimeFormat = 'yyyy-MM-dd HH:mm:ss';
 }
-

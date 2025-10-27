@@ -23,4 +23,3 @@ abstract class TaskRepository {
   /// Delete a task
   Future<void> deleteTask(String id);
 }
-

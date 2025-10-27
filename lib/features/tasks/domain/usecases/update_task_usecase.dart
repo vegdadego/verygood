@@ -18,4 +18,3 @@ class UpdateTaskUseCase {
     return await _repository.updateTask(task);
   }
 }
-

@@ -15,13 +15,13 @@ import 'package:dio/dio.dart';
 class NetworkException implements Exception {
   /// Human-readable error message
   final String message;
-  
+
   /// HTTP status code (if available)
   final int? statusCode;
-  
+
   /// Original Dio exception type
   final DioExceptionType? errorType;
-  
+
   /// Full error details from the server response
   final dynamic errorData;
 
@@ -33,7 +33,7 @@ class NetworkException implements Exception {
   });
 
   /// Create exception from Dio error
-  /// 
+  ///
   /// This factory method extracts meaningful information from Dio's
   /// exception and converts it into a user-friendly NetworkException.
   factory NetworkException.fromDioError(DioException error) {
@@ -137,7 +137,8 @@ class NetworkException implements Exception {
   bool get isServerError => statusCode != null && statusCode! >= 500;
 
   /// Check if this is a client error (4xx status codes)
-  bool get isClientError => statusCode != null && statusCode! >= 400 && statusCode! < 500;
+  bool get isClientError =>
+      statusCode != null && statusCode! >= 400 && statusCode! < 500;
 
   /// Check if this is a network connectivity error
   bool get isConnectivityError =>
@@ -167,5 +168,6 @@ class NetworkException implements Exception {
           errorType == other.errorType;
 
   @override
-  int get hashCode => message.hashCode ^ statusCode.hashCode ^ errorType.hashCode;
+  int get hashCode =>
+      message.hashCode ^ statusCode.hashCode ^ errorType.hashCode;
 }
