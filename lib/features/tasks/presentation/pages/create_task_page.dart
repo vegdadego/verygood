@@ -174,10 +174,17 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               ),
             ],
           ),
-          child: Icon(
-            Icons.task_alt,
-            size: 64,
-            color: Colors.blue.shade700,
+          child: Image.asset(
+            'assets/images/icon.png',
+            height: 64,
+            width: 64,
+            errorBuilder: (context, error, stackTrace) {
+              return Icon(
+                Icons.task_alt,
+                size: 64,
+                color: Colors.blue.shade700,
+              );
+            },
           ),
         ),
         const SizedBox(height: 16),

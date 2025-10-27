@@ -39,6 +39,13 @@ flutter:
     - assets/fonts/
     - assets/animations/
 
+  # Custom app icon
+  # Run: flutter pub run flutter_launcher_icons
+  # flutter_icons:
+  #   android: true
+  #   ios: true
+  #   image_path: "assets/images/icon.png"
+
   # Uncomment to add custom fonts
   # fonts:
   #   - family: CustomFont

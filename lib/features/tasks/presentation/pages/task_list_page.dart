@@ -58,13 +58,26 @@ class _TaskListPageState extends State<TaskListPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
           children: [
-            Text('Smart Task Manager'),
-            Text(
-              'JSONPlaceholder • Read-only',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+            Image.asset(
+              'assets/images/icon.png',
+              height: 32,
+              width: 32,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.checklist);
+              },
+            ),
+            const SizedBox(width: 12),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Smart Task Manager'),
+                Text(
+                  'JSONPlaceholder • Read-only',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                ),
+              ],
             ),
           ],
         ),
