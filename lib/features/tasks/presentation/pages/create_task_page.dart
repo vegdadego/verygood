@@ -126,11 +126,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
         title: const Text('Create New Task'),
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         foregroundColor: Colors.black87,
       ),
       body: SingleChildScrollView(
@@ -198,137 +198,108 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     );
   }
 
-  /// Title input field with validation
+  /// Title input field with modern glassmorphism design
   Widget _buildTitleField() {
-    return TextFormField(
-      controller: _titleController,
-      decoration: InputDecoration(
-        labelText: 'Task Title',
-        hintText: 'Enter task title',
-        prefixIcon: Icon(Icons.title),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.blue.shade600, width: 2),
-        ),
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      ),
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return 'Please enter a task title';
-        }
-        if (value.trim().length < 3) {
-          return 'Title must be at least 3 characters';
-        }
-        return null;
-      },
-      enabled: !_isLoading,
-    );
-  }
-
-  /// Description input field with validation
-  Widget _buildDescriptionField() {
-    return TextFormField(
-      controller: _descriptionController,
-      maxLines: 4,
-      decoration: InputDecoration(
-        labelText: 'Description',
-        hintText: 'Enter task description',
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(bottom: 80),
-          child: Icon(Icons.description),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.blue.shade600, width: 2),
-        ),
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: EdgeInsets.all(16),
-      ),
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return 'Please enter a task description';
-        }
-        if (value.trim().length < 5) {
-          return 'Description must be at least 5 characters';
-        }
-        return null;
-      },
-      enabled: !_isLoading,
-    );
-  }
-
-  /// Submit button with loading state
-  Widget _buildSubmitButton() {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue.shade200,
-            blurRadius: 8,
-            offset: Offset(0, 4),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
-      height: 56,
-      child: ElevatedButton(
-        onPressed: _isLoading ? null : _submitTask,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blue.shade600,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 0,
+      child: TextFormField(
+        controller: _titleController,
+        decoration: InputDecoration(
+          labelText: 'Task Title',
+          hintText: 'e.g., Finish Flutter assignment',
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.all(20),
         ),
-        child: _isLoading
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text('Creating...'),
-                ],
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.add_circle_outline, size: 24),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Create Task',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+        validator: (value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Please enter a task title';
+          }
+          if (value.trim().length < 3) {
+            return 'Title must be at least 3 characters';
+          }
+          return null;
+        },
+        enabled: !_isLoading,
       ),
+    );
+  }
+
+  /// Description input field with modern glassmorphism design
+  Widget _buildDescriptionField() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: TextFormField(
+        controller: _descriptionController,
+        maxLines: 4,
+        decoration: const InputDecoration(
+          labelText: 'Description',
+          hintText: 'Add details about your task...',
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(20),
+        ),
+        validator: (value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Please enter a description';
+          }
+          if (value.trim().length < 5) {
+            return 'Description must be at least 5 characters';
+          }
+          return null;
+        },
+        enabled: !_isLoading,
+      ),
+    );
+  }
+
+  /// Submit button with modern design and loading state
+  Widget _buildSubmitButton() {
+    return ElevatedButton(
+      onPressed: _isLoading ? null : _submitTask,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF667eea),
+        padding: const EdgeInsets.symmetric(vertical: 18),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        elevation: 4,
+      ),
+      child: _isLoading
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            )
+          : const Text(
+              'Create Task',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
     );
   }
 }
