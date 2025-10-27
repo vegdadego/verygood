@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/network/dio_client.dart';
 
 /// Page for creating a new task.
@@ -48,7 +50,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     });
 
     try {
-      // Create task via DioClient
+      // Create task via DioClient (JSONPlaceholder doesn't persist, but we use it for testing)
       final dio = DioClient();
       await dio.post(
         '/posts',
@@ -57,6 +59,26 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           'body': _descriptionController.text.trim(),
         },
       );
+
+      // Save task locally to SharedPreferences
+      final taskData = {
+        'id': DateTime.now().millisecondsSinceEpoch.toString(),
+        'title': _titleController.text.trim(),
+        'body': _descriptionController.text.trim(),
+        'userID': 1,
+      };
+
+      // Get existing tasks
+      final prefs = await SharedPreferences.getInstance();
+      final existingTasksJson = prefs.getString('local_tasks') ?? '[]';
+      final dynamic decoded = json.decode(existingTasksJson);
+      final List<dynamic> existingTasks = List<dynamic>.from(decoded as List);
+      
+      // Add new task
+      existingTasks.add(taskData);
+      
+      // Save back to SharedPreferences
+      await prefs.setString('local_tasks', json.encode(existingTasks));
 
       // Show success message and return the created task
       if (mounted) {

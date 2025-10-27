@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/network/dio_client.dart';
 import 'create_task_page.dart';
 
@@ -28,7 +30,7 @@ class _TaskListPageState extends State<TaskListPage> {
     _loadTasks();
   }
 
-  /// Load tasks from API using DioClient
+  /// Load tasks from API using DioClient and merge with local tasks
   Future<void> _loadTasks() async {
     setState(() {
       _isLoading = true;
@@ -40,8 +42,23 @@ class _TaskListPageState extends State<TaskListPage> {
       final response = await dio.get('/posts');
 
       if (response.statusCode == 200) {
+        // Get tasks from API
+        final apiTasks = List<Map<String, dynamic>>.from(response.data as List);
+        
+        // Get local tasks from SharedPreferences
+        final prefs = await SharedPreferences.getInstance();
+        final localTasksJson = prefs.getString('local_tasks') ?? '[]';
+        final dynamic decoded = json.decode(localTasksJson);
+        final localTasksData = List<dynamic>.from(decoded as List);
+        final localTasks = localTasksData
+            .map((task) => task as Map<String, dynamic>)
+            .toList();
+        
+        // Merge API tasks with local tasks (local tasks first)
+        final combinedTasks = [...localTasks, ...apiTasks];
+        
         setState(() {
-          _tasks = List<Map<String, dynamic>>.from(response.data as List);
+          _tasks = combinedTasks;
           _isLoading = false;
         });
       }
