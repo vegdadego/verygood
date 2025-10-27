@@ -59,16 +59,14 @@ class TaskCubit extends Cubit<TaskState> {
   }
 
   /// Create a new task
+  ///
+  /// Creates a task and returns it on success or throws an error on failure.
+  /// This method doesn't emit states, allowing the UI to handle success/error feedback.
   Future<void> createTask({
     required String title,
     required String description,
   }) async {
-    try {
-      await _createTaskUseCase(title: title, description: description);
-      await loadTasks(); // Reload tasks to reflect the new task
-    } catch (e) {
-      emit(TaskError('Failed to create task: ${e.toString()}'));
-    }
+    await _createTaskUseCase(title: title, description: description);
   }
 
   /// Update an existing task
