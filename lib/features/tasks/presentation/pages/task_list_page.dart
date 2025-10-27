@@ -58,7 +58,16 @@ class _TaskListPageState extends State<TaskListPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text('Smart Task Manager'),
+        title: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Smart Task Manager'),
+            Text(
+              'JSONPlaceholder • Read-only',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+            ),
+          ],
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -71,14 +80,19 @@ class _TaskListPageState extends State<TaskListPage> {
       ),
       body: _buildBody(),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+        onPressed: () async {
           // Navigate to create task page
-          Navigator.push<CreateTaskPage>(
+          final result = await Navigator.push<bool>(
             context,
             MaterialPageRoute(
               builder: (context) => const CreateTaskPage(),
             ),
-          ).then((_) => _loadTasks());
+          );
+          
+          // If task was created successfully, refresh the list
+          if (result == true) {
+            _loadTasks();
+          }
         },
         icon: const Icon(Icons.add),
         label: const Text('New Task'),

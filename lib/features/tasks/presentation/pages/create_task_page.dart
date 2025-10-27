@@ -58,14 +58,14 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         },
       );
 
-      // Show success message
+      // Show success message and return the created task
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           _buildSuccessSnackBar(),
         );
 
-        // Navigate back
-        Navigator.of(context).pop();
+        // Navigate back with result indicating task was created
+        Navigator.of(context).pop(true);
       }
     } catch (e) {
       // Show error message
@@ -195,6 +195,32 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           style: TextStyle(
             fontSize: 14,
             color: Colors.grey.shade600,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.orange.shade50,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.orange.shade200),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.info_outline, size: 16, color: Colors.orange.shade700),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  'JSONPlaceholder is read-only\nYour task won\'t persist',
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.orange.shade700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
         ),
       ],
