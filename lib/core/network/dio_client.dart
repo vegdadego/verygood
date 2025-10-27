@@ -78,36 +78,24 @@ class DioClient {
   /// These methods provide a cleaner API and encapsulate Dio-specific logic
 
   /// Perform a GET request
-  Future<Response<T>> get<T>(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
+  /// 
+  /// Simple method to fetch data from the API
+  /// Returns Response with dynamic data type
+  Future<Response<dynamic>> get(String path) async {
     try {
-      return await _dio.get<T>(
-        path,
-        queryParameters: queryParameters,
-        options: options,
-      );
+      return await _dio.get(path);
     } on DioException catch (e) {
       throw NetworkException.fromDioError(e);
     }
   }
 
   /// Perform a POST request
-  Future<Response<T>> post<T>(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
+  /// 
+  /// Simple method to send data to the API
+  /// Returns Response with dynamic data type
+  Future<Response<dynamic>> post(String path, Map<String, dynamic> data) async {
     try {
-      return await _dio.post<T>(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-      );
+      return await _dio.post(path, data: data);
     } on DioException catch (e) {
       throw NetworkException.fromDioError(e);
     }

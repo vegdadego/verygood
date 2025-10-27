@@ -26,11 +26,12 @@ class TaskRemoteDataSource {
   /// Returns a list of TaskModel instances.
   Future<List<TaskModel>> getTasks() async {
     try {
-      final response = await _dioClient.get<List<dynamic>>(
+      final response = await _dioClient.get(
         ApiConstants.getTasksEndpoint(),
       );
       final tasksJson = response.data ?? [];
-      return tasksJson
+      final jsonList = tasksJson as List;
+      return jsonList
           .map((json) => TaskModel.fromJson(json as Map<String, dynamic>))
           .toList();
     } on NetworkException {
@@ -46,7 +47,7 @@ class TaskRemoteDataSource {
   /// Returns a TaskModel instance.
   Future<TaskModel> getTaskById(String id) async {
     try {
-      final response = await _dioClient.get<Map<String, dynamic>>(
+      final response = await _dioClient.get(
         ApiConstants.getTaskByIdEndpoint(id),
       );
       return TaskModel.fromJson(response.data as Map<String, dynamic>);
@@ -67,9 +68,9 @@ class TaskRemoteDataSource {
       final jsonData = task.toJson();
 
       // Make the POST request
-      final response = await _dioClient.post<dynamic>(
+      final response = await _dioClient.post(
         ApiConstants.getTasksEndpoint(),
-        data: jsonData,
+        jsonData,
       );
 
       // Handle response data
