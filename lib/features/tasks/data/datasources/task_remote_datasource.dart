@@ -29,10 +29,10 @@ class TaskRemoteDataSource {
       final response = await _dioClient.get(
         ApiConstants.getTasksEndpoint(),
       );
-      final tasksJson = response.data ?? [];
-      final jsonList = tasksJson as List<dynamic>;
+      final dynamic tasksJson = response.data ?? <dynamic>[];
+      final List<dynamic> jsonList = tasksJson as List<dynamic>;
       return jsonList
-          .map((json) => TaskModel.fromJson(json as Map<String, dynamic>))
+          .map<TaskModel>((dynamic json) => TaskModel.fromJson(json as Map<String, dynamic>))
           .toList();
     } on NetworkException {
       rethrow;

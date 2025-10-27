@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../features/tasks/presentation/pages/task_list_page.dart';
+import 'package:smart_task_manager/features/tasks/presentation/pages/task_list_page.dart';
 
 /// Smart Task Manager App - Main application widget
 ///

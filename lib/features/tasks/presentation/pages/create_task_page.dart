@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/task_cubit.dart';
+import '../../../../core/network/dio_client.dart';
 
 /// Page for creating a new task.
 ///
@@ -35,7 +34,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   /// This method:
   /// 1. Validates the form
   /// 2. Shows loading indicator
-  /// 3. Calls the cubit to create the task
+  /// 3. Makes API call via DioClient to create the task
   /// 4. Shows success/error messages
   /// 5. Navigates back on success
   Future<void> _submitTask() async {
@@ -49,10 +48,14 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     });
 
     try {
-      // Create task via cubit
-      await context.read<TaskCubit>().createTask(
-        title: _titleController.text.trim(),
-        description: _descriptionController.text.trim(),
+      // Create task via DioClient
+      final dio = DioClient();
+      await dio.post(
+        '/posts',
+        {
+          'title': _titleController.text.trim(),
+          'body': _descriptionController.text.trim(),
+        },
       );
 
       // Show success message
