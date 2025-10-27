@@ -1,0 +1,44 @@
+# 📸 Ejemplo de Uso de Imágenes
+
+Para agregar imágenes a tu app:
+
+1. Coloca tus archivos de imagen (.png, .jpg, .svg) en esta carpeta
+2. Las imágenes ya están registradas en pubspec.yaml
+3. Usa las imágenes en tu código así:
+
+```dart
+// Imagen simple
+Image.asset(
+  'assets/images/tu_imagen.png',
+  width: 100,
+  height: 100,
+)
+
+// Con error handling
+Image.asset(
+  'assets/images/logo.png',
+  errorBuilder: (context, error, stackTrace) {
+    return Icon(Icons.error);
+  },
+)
+
+// Con fit
+Image.asset(
+  'assets/images/background.jpg',
+  fit: BoxFit.cover,
+)
+```
+
+## 🎨 Formatos Recomendados
+- PNG para logos e iconos
+- JPG para fotografías
+- SVG para iconos vectoriales
+
+## 📏 Optimización
+- Comprime imágenes antes de añadirlas
+- Usa herramientas como TinyPNG
+- Considera diferentes densidades:
+  - imagen.png (1x)
+  - imagen@2x.png (2x)
+  - imagen@3x.png (3x)
+
