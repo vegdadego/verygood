@@ -35,16 +35,11 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
-    - assets/fonts/
-    - assets/animations/
-
-  # Custom app icon
-  # Run: flutter pub run flutter_launcher_icons
-  # flutter_icons:
-  #   android: true
-  #   ios: true
-  #   image_path: "assets/images/icon.png"
+    - assets/images/icon.png
+    - assets/images/PLACEHOLDER_EXAMPLE.txt
+    # Add more images as needed:
+    # - assets/images/logo.png
+    # - assets/images/background.jpg
 
   # Uncomment to add custom fonts
   # fonts:
