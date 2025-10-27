@@ -38,7 +38,7 @@ class _TaskListPageState extends State<TaskListPage> {
     try {
       final dio = DioClient();
       final response = await dio.get('/posts');
-      
+
       if (response.statusCode == 200) {
         setState(() {
           _tasks = List<Map<String, dynamic>>.from(response.data as List);
@@ -202,7 +202,9 @@ class _TaskListPageState extends State<TaskListPage> {
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Text(
-            (task['body'] as String?) ?? (task['description'] as String?) ?? 'No description',
+            (task['body'] as String?) ??
+                (task['description'] as String?) ??
+                'No description',
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey.shade600,

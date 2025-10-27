@@ -78,7 +78,7 @@ class DioClient {
   /// These methods provide a cleaner API and encapsulate Dio-specific logic
 
   /// Perform a GET request
-  /// 
+  ///
   /// Simple method to fetch data from the API
   /// Returns Response with dynamic data type
   Future<Response<dynamic>> get(String path) async {
@@ -90,7 +90,7 @@ class DioClient {
   }
 
   /// Perform a POST request
-  /// 
+  ///
   /// Simple method to send data to the API
   /// Returns Response with dynamic data type
   Future<Response<dynamic>> post(String path, Map<String, dynamic> data) async {

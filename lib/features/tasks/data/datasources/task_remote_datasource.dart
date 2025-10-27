@@ -30,7 +30,7 @@ class TaskRemoteDataSource {
         ApiConstants.getTasksEndpoint(),
       );
       final tasksJson = response.data ?? [];
-      final jsonList = tasksJson as List;
+      final jsonList = tasksJson as List<dynamic>;
       return jsonList
           .map((json) => TaskModel.fromJson(json as Map<String, dynamic>))
           .toList();
