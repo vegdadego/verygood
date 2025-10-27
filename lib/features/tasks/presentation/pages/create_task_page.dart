@@ -51,9 +51,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     try {
       // Create task via cubit
       await context.read<TaskCubit>().createTask(
-            title: _titleController.text.trim(),
-            description: _descriptionController.text.trim(),
-          );
+        title: _titleController.text.trim(),
+        description: _descriptionController.text.trim(),
+      );
 
       // Show success message
       if (mounted) {
@@ -332,4 +332,3 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     );
   }
 }
-
