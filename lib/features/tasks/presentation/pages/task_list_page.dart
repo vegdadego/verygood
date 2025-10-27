@@ -88,7 +88,7 @@ class _TaskListPageState extends State<TaskListPage> {
               builder: (context) => const CreateTaskPage(),
             ),
           );
-          
+
           // If task was created successfully, refresh the list
           if (result == true) {
             _loadTasks();
