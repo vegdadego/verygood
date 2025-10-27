@@ -32,7 +32,9 @@ class TaskRemoteDataSource {
       final dynamic tasksJson = response.data ?? <dynamic>[];
       final List<dynamic> jsonList = tasksJson as List<dynamic>;
       return jsonList
-          .map<TaskModel>((dynamic json) => TaskModel.fromJson(json as Map<String, dynamic>))
+          .map<TaskModel>(
+            (dynamic json) => TaskModel.fromJson(json as Map<String, dynamic>),
+          )
           .toList();
     } on NetworkException {
       rethrow;
